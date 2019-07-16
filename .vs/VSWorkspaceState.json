@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\content",
+    "\\data",
+    "\\layouts",
+    "\\themes",
+    "\\themes\\my-theme",
+    "\\themes\\my-theme\\layouts",
+    "\\themes\\my-theme\\layouts\\partials",
+    "\\themes\\my-theme\\layouts\\_default"
+  ],
+  "SelectedNode": "\\themes\\my-theme\\layouts\\index.html",
+  "PreviewInSolutionExplorer": false
+}

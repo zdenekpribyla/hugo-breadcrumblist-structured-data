@@ -1,0 +1,13 @@
+<head>
+        <script type="application/ld+json">
+            {{ partial "breadcrumblist" . | safeJS }}
+        </script>
+</head>
+
+<h2>Title of page: {{ .Title }}</h2>
+
+<h4>See output in head:</h4>
+ head -> script type="application/ld+json"
+
+<h4>Or non-formated output is here:</h4>
+{{ partial "breadcrumblist" . | safeJS }}
