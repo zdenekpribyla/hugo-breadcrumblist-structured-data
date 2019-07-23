@@ -8,7 +8,8 @@
     {{ $.Scratch.Add "path" "/" }}
     {{ if ne $element "" }}
     {{ $.Scratch.Add "position" 1 }}
-    {{ $.Scratch.Add "breadcrumb" (slice (dict "url" ($.Scratch.Get "path") "name" . "position" ($.Scratch.Get "position"))) }}
+    {{ $page := $.Site.GetPage ($.Scratch.Get "path" | relURL | strings.TrimSuffix "/") }}
+    {{ $.Scratch.Add "breadcrumb" (slice (dict "url" ($.Scratch.Get "path") "name" $page.Title "position" ($.Scratch.Get "position"))) }}
     {{ end }}
 {{ end }}
 
@@ -17,7 +18,7 @@
     "position": {{ .position }},
     "item": 
     {
-        "@id": "{{.url | strings.TrimSuffix "/"}}",
-        "name": "{{ replace (title (.name | safeHTMLAttr)) "-" " " }}"
+        "@id": "{{.url}}",
+        "name": "{{ .name }}"
     }       
 }{{ end }}
