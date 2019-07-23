@@ -10,4 +10,6 @@
  head -> script type="application/ld+json"
 
 <h4>Or non-formated output is here:</h4>
-{{ partial "breadcrumblist" . | safeJS }}
+{{ partial "breadcrumblist" . }}
+
+{{ .Content }}
