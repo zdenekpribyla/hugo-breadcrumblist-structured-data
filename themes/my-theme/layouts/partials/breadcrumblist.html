@@ -4,7 +4,7 @@
 
 {{ $scratch.Set "path" (.Site.BaseURL | strings.TrimSuffix "/") }}
 {{ $scratch.Set "position" 1 }}
-{{ $scratch.Add "breadcrumb" (slice (dict "url" .Site.BaseURL "name" "home" "position" ($scratch.Get "position") )) }}
+{{ $scratch.Add "breadcrumb" (slice (dict "url" .Site.BaseURL "name" (i18n "home") "position" ($scratch.Get "position") )) }}
 
 {{ range split $relUrl "/" }}
     {{ $scratch.Add "path" . }}
