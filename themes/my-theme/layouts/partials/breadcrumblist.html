@@ -1,28 +1,28 @@
 {{- $scratch := newScratch -}}
 
-{{- $relUrl := replace (.Permalink | relURL | strings.TrimSuffix "/") (printf "%s" .Site.BaseURL) "" -}}
+{{ $scratch.Set "pages" slice }}
+{{ $scratch.Set "reversed" slice }}
+{{ $scratch.Set "current" . }}
+{{ range slice 1 2 3 4 5 6 }} <!-- Since there is no while loop in Hugo, I set it to a maximum of 6 crumbs. If there are more, you can increase the slice range -->
+    {{ if ($scratch.Get "current") }}
+    {{ $scratch.Add "reversed" ($scratch.Get "current") }}
+    {{ $scratch.Set "current" ($scratch.Get "current").Parent }}
+    {{ end }}
+{{ end }}
 
-{{- $scratch.Set "path" (.Site.BaseURL | strings.TrimSuffix "/") -}}
-{{- $scratch.Set "position" 1 -}}
-{{- $scratch.Add "breadcrumb" (slice (dict "url" .Site.BaseURL "name" (i18n "home") "position" ($scratch.Get "position") )) -}}
+{{ $scratch.Set "position" (len ($scratch.Get "reversed")) }}
+{{ range $scratch.Get "reversed" }}
+    {{ $scratch.Add "pages" (dict "position" ($scratch.Get "position") "page" .) }}
+    {{ $scratch.Set "position" (sub ($scratch.Get "position") 1) }}
+{{ end }}
 
-{{- range split $relUrl "/" -}}
-    {{- $scratch.Add "path" . -}}
-    {{- $scratch.Add "path" "/" -}}
-    {{- if ne . "" -}}
-    {{- $scratch.Add "position" 1 -}}
-    {{- $page := $.Site.GetPage ($scratch.Get "path" | relURL | strings.TrimSuffix "/") -}}
-    {{- $scratch.Add "breadcrumb" (slice (dict "url" ($scratch.Get "path") "name" $page.Title "position" ($scratch.Get "position"))) -}}
-    {{- end -}}
-{{- end -}}
-
-{{ range $scratch.Get "breadcrumb" }}{{ if ne .position 1 }},{{ end }}
+{{ range sort ($scratch.Get "pages") "position" "asc" }}{{ if ne ($scratch.Get "position") 1 }},{{ end }}
 {
     "@type": "ListItem",
     "position": {{ .position }},
     "item": 
     {
-        "@id": "{{.url}}",
-        "name": "{{ .name }}"
+        "@id": "{{ .page.Permalink}}",
+        "name": "{{ .page.Title }}"
     }       
 }{{ end }}
