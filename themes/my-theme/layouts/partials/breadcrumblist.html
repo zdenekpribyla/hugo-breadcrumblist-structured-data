@@ -1,8 +1,11 @@
 {{- $scratch := newScratch -}}
 
+<!-- Set variables -->
 {{ $scratch.Set "pages" slice }}
 {{ $scratch.Set "reversed" slice }}
 {{ $scratch.Set "current" . }}
+
+<!-- Loop over parent pages -->
 {{ range slice 1 2 3 4 5 6 }} <!-- Since there is no while loop in Hugo, I set it to a maximum of 6 crumbs. If there are more, you can increase the slice range -->
     {{ if ($scratch.Get "current") }}
     {{ $scratch.Add "reversed" ($scratch.Get "current") }}
@@ -10,12 +13,14 @@
     {{ end }}
 {{ end }}
 
+<!-- Reverse page order -->
 {{ $scratch.Set "position" (len ($scratch.Get "reversed")) }}
 {{ range $scratch.Get "reversed" }}
     {{ $scratch.Add "pages" (dict "position" ($scratch.Get "position") "page" .) }}
     {{ $scratch.Set "position" (sub ($scratch.Get "position") 1) }}
 {{ end }}
 
+<!-- Create breadcrumb objects -->
 {{ range sort ($scratch.Get "pages") "position" "asc" }}{{ if ne .position 1 }},{{ end }}
 {
     "@type": "ListItem",
