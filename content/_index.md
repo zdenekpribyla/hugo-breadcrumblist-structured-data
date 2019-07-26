@@ -1,5 +1,6 @@
 ---
-Title: Home page
+Title: EN Home page
+BreadcrumbListName: Home
 ---
 
 Links to pages - long url (domain.com/category/subcategory/last-page):
@@ -13,3 +14,13 @@ Links to pages - long url (domain.com/category/subcategory/last-page):
 Link to page - short url (domain.com/last-page)
 
 * [Product Audi A8](/audi-8/)
+
+Link to Spanish language ES
+
+[ES homepage](/es)
+
+[category](/es/categoria-audi/)
+
+[subcategory](/es/categoria-audi/carra-modelos)
+
+[product audi 6](/es/categoria-audi/carra-modelos/carra-audi-6/)

@@ -1,0 +1,12 @@
+baseURL: http://example.org/
+DefaultContentLanguage: en
+languageCode: en
+title: My New Hugo Site
+theme: my-theme
+languages: 
+  en:
+    languageName: English
+    weight: 1
+  es:
+    languageName: Spanish
+    weight: 2

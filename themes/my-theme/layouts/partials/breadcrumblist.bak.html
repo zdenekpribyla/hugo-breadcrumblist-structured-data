@@ -1,0 +1,30 @@
+{{- $scratch := newScratch -}}
+
+{{- $relUrl := (.RelPermalink | strings.TrimSuffix "/") -}}
+
+
+{{- $scratch.Set "path" (.Site.BaseURL | strings.TrimSuffix "/") -}}
+{{- $scratch.Set "position" 1 -}}
+{{- $scratch.Add "breadcrumb" (slice (dict "url" .Site.BaseURL "name" (i18n "home") "position" ($scratch.Get "position") )) -}}
+
+{{- range split $relUrl "/" -}}
+    {{- $scratch.Add "path" . -}}
+    {{- $scratch.Add "path" "/" -}}
+    {{- if ne . "" -}}
+    {{- $scratch.Add "position" 1 -}}
+    {{- $page := $.Site.GetPage (replace ($scratch.Get "path" | relURL | strings.TrimSuffix "/") (print "/" $.Lang) "") -}}
+    {{ $page }}: {{  (replace ($scratch.Get "path" | relURL | strings.TrimSuffix "/") (print "/" $.Lang) "")  }}
+    {{- $scratch.Add "breadcrumb" (slice (dict "url" ($scratch.Get "path") "name" $page.Title "position" ($scratch.Get "position"))) -}}
+    {{- end -}}
+{{- end -}}
+
+{{ range $scratch.Get "breadcrumb" }}{{ if ne .position 1 }},{{ end }}
+{
+    "@type": "ListItem",
+    "position": {{ .position }},
+    "item": 
+    {
+        "@id": "{{.url}}",
+        "name": "{{ .name }}"
+    }       
+}{{ end }}

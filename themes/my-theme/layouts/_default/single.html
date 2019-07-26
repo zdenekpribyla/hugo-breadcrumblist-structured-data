@@ -1,7 +1,17 @@
 <head>
-        <script type="application/ld+json">
-            {{ partial "breadcrumblist" . | safeJS }}
-        </script>
+    {{ if .IsHome }}
+    {{ else }}
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement":
+            [
+                {{ partial "breadcrumblist" . | safeJS }}
+            ]
+        }
+    </script>
+    {{ end }}
 </head>
 
 <h2>Title of page: {{ .Title }}</h2>
