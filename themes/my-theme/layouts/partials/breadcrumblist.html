@@ -13,14 +13,14 @@
     {{ end }}
 {{ end }}
 
-<!-- Reverse page order -->
+<!-- Add "position" property -->
 {{ $scratch.Set "position" (len ($scratch.Get "reversed")) }}
 {{ range $scratch.Get "reversed" }}
     {{ $scratch.Add "pages" (dict "position" ($scratch.Get "position") "page" .) }}
     {{ $scratch.Set "position" (sub ($scratch.Get "position") 1) }}
 {{ end }}
 
-<!-- Create breadcrumb objects -->
+<!-- Reverse page order & create breadcrumb objects -->
 {{ range sort ($scratch.Get "pages") "position" "asc" }}{{ if ne .position 1 }},{{ end }}
 {
     "@type": "ListItem",
