@@ -1,5 +1,6 @@
 ---
 Title: EN Home page
+BreadcrumbListName: Home
 ---
 
 Links to pages - long url (domain.com/category/subcategory/last-page):
